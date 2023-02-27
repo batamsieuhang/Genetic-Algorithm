@@ -1,12 +1,8 @@
 import copy
+import random
 from data import player_chelsea
 from random import randrange, sample
 
-# player position
-# GK-GoalKeeper
-# DF-Defender
-# CM-Central Midfielder
-# AT-Attacker
 
 value_cap = 500  # limit for sum value 11-squad
 pop_size = 20  # population size
@@ -140,3 +136,37 @@ def intial_seed(team):
 
 
 intial_seed(team=bit_string_player)
+
+
+team_information = intial_seed(team=bit_string_player)
+team_information = sorted_dict = dict(
+    sorted(team_information.items(), key=lambda x: x[1]['rating'], reverse=True))
+print(team_information)
+for squad in team_information.values():
+    print(squad)
+
+
+"""selection function"""
+
+
+def selection(population):
+    fitness_scores = [individual['rating']
+                      for individual in population.values()]
+    total_fitness = sum(fitness_scores)
+    selection_probabilities = [
+        score / total_fitness for score in fitness_scores]
+
+    selected = []
+    for i in range(len(population)):
+        cumulative_probability = 0
+        r = random.uniform(0, 1)
+        for j in range(len(population)):
+            cumulative_probability += selection_probabilities[j]
+            if cumulative_probability > r:
+                selected.append(population[j])
+                break
+
+    return selected
+
+
+selection_choices = selection(team_information)
