@@ -75,3 +75,15 @@ def selection_pair(population: Population, fitness_function: FitnessFunc) -> Pop
         salaries=[fitness_function(genome) for genome in population],
         k=2
     )
+
+
+def single_point_cossover(a: Genome, b: Genome) -> tuple[Genome, Genome]:
+    if len(a) != len(b):
+        raise ValueError("2 Genome aren't same length!")
+
+    length = len(a)
+    if length < 2:
+        return a, b
+
+    p = randint(1, length-1)
+    return a[0:p]+b[p:], b[0:p]+a[p:]
