@@ -287,9 +287,38 @@ def sum_value(team):  # sum of value 11-squad
                 index += 1
     return value
 
+
+def sum_rating(team):  # sum of value 11-squad
+    rating = 0
+    for i in range(int(len(team))):
+        if i == 0:
+            index = 0
+            for players in player_chelsea["GK"].values():
+                if (team[i][index]) == 1:
+                    rating += players['rating']
+                index += 1
+        if i == 1:
+            index = 0
+            for players in player_chelsea["DF"].values():
+                if (team[i][index]) == 1:
+                    rating += players['rating']
+                index += 1
+        if i == 2:
+            index = 0
+            for players in player_chelsea["CM"].values():
+                if (team[i][index]) == 1:
+                    rating += players['rating']
+                index += 1
+        if i == 3:
+            index = 0
+            for players in player_chelsea["AT"].values():
+                if (team[i][index]) == 1:
+                    rating += players['rating']
+                index += 1
+    return rating
+
+
 # create population
-
-
 def intial_seed(team):
     teams = []
     for i in range(pop_size):
@@ -309,6 +338,7 @@ def intial_seed(team):
     for team in teams:
         print(team)
         print(sum_value(team))
+        print(sum_rating(team)/11)
         print("\n")
     print(len(teams))
     return teams
