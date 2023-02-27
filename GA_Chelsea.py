@@ -333,7 +333,7 @@ def intial_seed(team):
             Ran_pos(team,
                     position="AT", num_player=3)
             if (sum_value(team) <= value_cap):
-                teams.append(team)
+                teams.append(team)  # include Fitness evaluation
                 break
     for team in teams:
         print(team)
