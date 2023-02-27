@@ -113,6 +113,7 @@ def sum_rating(team):  # sum of value 11-squad
 # create population
 def intial_seed(team):
     teams = []
+    team_information = {}
     for i in range(pop_size):
         while True:
             team = copy.deepcopy(bit_string_player)
@@ -127,13 +128,15 @@ def intial_seed(team):
             if (sum_value(team) <= value_cap):
                 teams.append(team)  # include Fitness evaluation
                 break
+    index = 0
     for team in teams:
-        print(team)
-        print(sum_value(team))
-        print(sum_rating(team)/11)
-        print("\n")
+        team_information[index] = {"squad": team, "value": sum_value(
+            team), "rating": sum_rating(team)}
+        index += 1
+
     print(len(teams))
-    return teams
+    print(team_information)
+    return team_information
 
 
 intial_seed(team=bit_string_player)
