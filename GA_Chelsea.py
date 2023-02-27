@@ -170,3 +170,19 @@ def selection(population):
 
 
 selection_choices = selection(team_information)
+
+
+# crossover function
+def crossover(parent1, parent2):
+    child1 = copy.deepcopy(parent1)
+    child2 = copy.deepcopy(parent2)
+    crossover_point = random.randint(1, len(child1['squad']) - 1)
+    for i in range(crossover_point, len(child1['squad'])):
+        child1['squad'][i], child2['squad'][i] = child2['squad'][i], child1['squad'][i]
+    return child1, child2
+
+
+parent1, parent2 = random.sample(selection_choices, 2)
+child1, child2 = crossover(parent1, parent2)
+
+print(child1, "\n", child2)
