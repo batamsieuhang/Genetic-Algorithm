@@ -1,10 +1,16 @@
-from typing import List, Callable
+from typing import List, Callable, Tuple
 from random import choices, randint, random, randrange
 from collections import namedtuple
+from functools import partial
 
 Genome = List[int]
 Population = List[Genome]
 FitnessFunc = Callable[[Genome], int]
+PopulateFunc = Callable[[], Population]
+SelectionFunc = Callable[[Population, FitnessFunc], Tuple[Genome, Genome]]
+CrossoverFunc = Callable[[Genome, Genome], Tuple[Genome, Genome]]
+MutationFunc = Callable[[Genome], Genome]
+
 Thing = namedtuple('Thing', ['name', 'position', 'rating', 'salary'])
 
 
@@ -77,7 +83,7 @@ def selection_pair(population: Population, fitness_function: FitnessFunc) -> Pop
     )
 
 
-def single_point_cossover(a: Genome, b: Genome) -> tuple[Genome, Genome]:
+def single_point_cossover(a: Genome, b: Genome) -> Tuple[Genome, Genome]:
     if len(a) != len(b):
         raise ValueError("2 Genome aren't same length!")
 
@@ -94,3 +100,45 @@ def mutation(genome: Genome, num: int = 1, probability: float = 0.5) -> Genome:
         index = randrange(len(genome))
         genome[index] = genome[index] if random(
         ) > probability else abs(genome[index]-1)
+    return genome
+
+
+def run_evolution(
+    populate_func: PopulateFunc,
+    fitness_func: FitnessFunc,
+    fitness_limit: int,
+    selection_func: SelectionFunc = selection_pair,
+    crossover_func: CrossoverFunc = single_point_cossover,
+    mutation_func: MutationFunc = mutation,
+    generation_limit: int = 100
+
+) -> Tuple[Population, int]:
+    population = populate_func()
+
+    for i in range(generation_limit):
+        population = sorted(
+            population,
+            key=lambda genome: fitness_func(genome),
+            reverse=True
+        )
+
+        if fitness_func(populate_func[0]) >= fitness_limit:
+            break
+
+        next_generation = population[0:2]
+
+        for j in range(int(len(population)/2)-1):
+            parents = selection_func(population, fitness_func)
+            offspring_a, offspring_b = crossover_func(parents[0], parents[1])
+            offspring_a = mutation_func(offspring_a)
+            offspring_b = mutation_func(offspring_b)
+            next_generation += [offspring_a, offspring_b]
+
+        population = next_generation
+
+    population = sorted(
+        population,
+        key=lambda genome: fitness_func(genome),
+        reverse=True
+    )
+    return population, i
