@@ -5,6 +5,9 @@ from random import randrange, sample
 # DF-Defender
 # CM-Central Midfielder
 # AT-Attacker
+
+value_cap = 500  # limit for sum value 11-squad
+
 player_chelsea = {
     "GK": {
         "Edouard Mendy": {
@@ -250,3 +253,33 @@ def Ran_pos(bit_string_player, position, num_player):
         print(index)
         for i in index:
             bit_string_player[3][i] = 1
+
+
+def sum_value(team):  # sum of value 11-squad
+    value = 0
+    for i in range(int(len(team))):
+        if i == 0:
+            index = 0
+            for players in player_chelsea["GK"].values():
+                if (team[i][index]) == 1:
+                    value += players['value']
+                index += 1
+        if i == 1:
+            index = 0
+            for players in player_chelsea["DF"].values():
+                if (team[i][index]) == 1:
+                    value += players['value']
+                index += 1
+        if i == 2:
+            index = 0
+            for players in player_chelsea["CM"].values():
+                if (team[i][index]) == 1:
+                    value += players['value']
+                index += 1
+        if i == 3:
+            index = 0
+            for players in player_chelsea["AT"].values():
+                if (team[i][index]) == 1:
+                    value += players['value']
+                index += 1
+    return value
