@@ -87,3 +87,10 @@ def single_point_cossover(a: Genome, b: Genome) -> tuple[Genome, Genome]:
 
     p = randint(1, length-1)
     return a[0:p]+b[p:], b[0:p]+a[p:]
+
+
+def mutation(genome: Genome, num: int = 1, probability: float = 0.5) -> Genome:
+    for _ in range(num):
+        index = randrange(len(genome))
+        genome[index] = genome[index] if random(
+        ) > probability else abs(genome[index]-1)
