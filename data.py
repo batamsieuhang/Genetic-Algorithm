@@ -1,38 +1,208 @@
-from collections import namedtuple
+player_chelsea = {
+    "GK": {
+        "Edouard Mendy": {
+            "name": "Edouard Mendy",
+            "position": "GK",
+            "rating": 6.5,
+            "value": 25,
+            "flag": 0
+        },
+        "Kepa Arrizabalaga": {
+            "name": "Kepa Arrizabalaga",
+            "position": "GK",
+            "rating": 7.02,
+            "value": 15,
+            "flag": 0
+        },
+        "Marcus Bettinelli": {
+            "name": "Marcus Bettinelli",
+            "position": "GK",
+            "rating": 5.0,
+            "value": 2,
+            "flag": 0
+        },
+    },
+    "DF": {
+        "Wesley Fofana": {
+            "name": "Wesley Fofana",
+            "position": "DF",
+            "rating": 7.48,
+            "value": 65,
+            "flag": 0
+        },
+        "Kalidou Koulibaly": {
+            "name": "Kalidou Koulibaly",
+            "position": "DF",
+            "rating": 6.82,
+            "value": 35,
+            "flag": 0
+        },
+        "Trevoh Chalobah": {
+            "name": "Trevoh Chalobah",
+            "position": "DF",
+            "rating": 6.94,
+            "value": 22,
+            "flag": 0
+        },
+        "Thiago Silva": {
+            "name": "Thiago Silva",
+            "position": "DF",
+            "rating": 6.93,
+            "value": 2,
+            "flag": 0
+        },
+        "Marc Cucurella": {
+            "name": "Marc Cucurella",
+            "position": "DF",
+            "rating": 6.54,
+            "value": 55,
+            "flag": 0
+        },
+        "Ben Chilwell": {
+            "name": "Ben Chilwell",
+            "position": "DF",
+            "rating": 6.97,
+            "value": 38,
+            "flag": 0
+        },
+        "Reece James": {
+            "name": "Reece James",
+            "position": "DF",
+            "rating": 7.19,
+            "value": 70,
+            "flag": 0
+        },
+        "César Azpilicueta": {
+            "name": "César Azpilicueta",
+            "position": "DF",
+            "rating": 6.29,
+            "value": 8,
+            "flag": 0
+        },
+    },
+    "CM": {
+        "Denis Zakaria": {
+            "name": "Denis Zakaria",
+            "position": "CM",
+            "rating": 7.51,
+            "value": 20,
+            "flag": 0
+        },
+        "N\'Golo Kanté": {
+            "name": "N\'Golo Kanté",
+            "position": "CM",
+            "rating": 7.2,
+            "value": 30,
+            "flag": 0
+        },
+        "Enzo Fernández": {
+            "name": "Enzo Fernández",
+            "position": "CM",
+            "rating": 6.81,
+            "value": 55,
+            "flag": 0
+        },
+        "Mateo Kovacic": {
+            "name": "Mateo Kovacic",
+            "position": "CM",
+            "rating": 6.85,
+            "value": 40,
+            "flag": 0
+        },
+        "Conor Gallagher": {
+            "name": "Conor Gallagher",
+            "position": "CM",
+            "rating": 6.57,
+            "value": 32,
+            "flag": 0
+        },
+        "Ruben Loftus-Cheek": {
+            "name": "Ruben Loftus-Cheek",
+            "position": "CM",
+            "rating": 6.6,
+            "value": 25,
+            "flag": 0
+        },
+        "Mason Mount": {
+            "name": "Mason Mount",
+            "position": "CM",
+            "rating":  6.89,
+            "value": 75,
+            "flag": 0
+        },
+        "Kai Havertz": {
+            "name": "Kai Havertz",
+            "position": "CM",
+            "rating": 6.75,
+            "value": 70,
+            "flag": 0
+        },
+    },
+    "AT": {
+        "Raheem Sterling": {
+            "name": "Raheem Sterling",
+            "position": "AT",
+            "rating": 6.66,
+            "value": 70,
+            "flag": 0
+        },
+        "Mykhaylo Mudryk": {
+            "name": "Mykhaylo Mudryk",
+            "position": "AT",
+            "rating": 6.15,
+            "value": 40,
+            "flag": 0
+        },
+        "Christian Pulisic": {
+            "name": "Christian Pulisic",
+            "position": "AT",
+            "rating": 6.31,
+            "value": 24,
+            "flag": 0
+        },
+        "Hakim Ziyech": {
+            "name": "Hakim Ziyech",
+            "position": "AT",
+            "rating": 6.47,
+            "value": 20,
+            "flag": 0
+        },
+        "Noni Madueke": {
+            "name": "Noni Madueke",
+            "position": "AT",
+            "rating": 6.77,
+            "value": 15,
+            "flag": 0
+        },
+        "João Félix": {
+            "name": "João Félix",
+            "position": "AT",
+            "rating": 6.55,
+            "value": 50,
+            "flag": 0
+        },
+        "Armando Broja": {
+            "name": "Armando Broja",
+            "position": "AT",
+            "rating": 6.29,
+            "value": 30,
+            "flag": 0
+        },
+        "Pierre-Emerick Aubameyang": {
+            "name": "Pierre-Emerick Aubameyang",
+            "position": "AT",
+            "rating": 6.15,
+            "value": 12,
+            "flag": 0
+        },
+        "David Datro Fofana": {
+            "name": "David Datro Fofana",
+            "position": "AT",
+            "rating": 6.61,
+            "value": 7,
+            "flag": 0
+        },
+    },
 
-Thing = namedtuple('Thing', ['name', 'position', 'rating', 'salary'])
 
-things = [
-    Thing('Edouard Mendy', 'GK', 6.5, 25),
-    Thing('Kepa Arrizabalaga', 'GK', 7.02, 15),
-    Thing('Marcus Bettinelli', 'GK', 5.0, 2),
-    Thing('Wesley Fofana', 'GK', 7.48, 65),
-    Thing('Kalidou Koulibaly', 'DF', 6.82, 35),
-    Thing('Trevoh Chalobah', 'DF', 6.94, 22),
-    Thing('Thiago Silva', 'DF', 6.93, 2),
-    Thing('Marc Cucurella', 'DF', 6.54, 55),
-    Thing('Ben Chilwell', 'DF', 6.97, 38),
-    Thing('Reece James', 'DF', 7.19, 70),
-    Thing('César Azpilicueta', 'DF', 6.29, 8),
-    Thing('Denis Zakaria', 'CM', 7.51, 20),
-    Thing('N\'Golo Kanté', 'CM', 7.2, 30),
-    Thing('Enzo Fernández', 'CM', 6.81, 55),
-    Thing('Mateo Kovacic', 'CM', 6.85, 40),
-    Thing('Conor Gallagher', 'CM', 66.57, 32),
-    Thing('Ruben Loftus-Cheek', 'CM', 6.6, 25),
-    Thing('Mason Mount', 'CM', 6.89, 75),
-    Thing('Kai Havertz', 'CM', 6.75, 70),
-    Thing('Raheem Sterling', 'AT', 6.66, 70),
-    Thing('Mykhaylo Mudryk', 'AT', 6.15, 40),
-    Thing('Christian Pulisic', 'AT', 6.31, 24),
-    Thing('Hakim Ziyech', 'AT', 6.47, 20),
-    Thing('Noni Madueke', 'AT', 6.77, 15),
-    Thing('João Félix', 'AT', 6.55, 50),
-    Thing('Armando Broja', 'AT', 6.29, 30),
-    Thing('Pierre-Emerick Aubameyang', 'AT', 6.15, 12),
-    Thing('David Datro Fofana', 'AT', 6.61, 7),
-
-
-
-
-]
+}
