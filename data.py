@@ -1,3 +1,10 @@
+
+# player position
+# GK-GoalKeeper
+# DF-Defender
+# CM-Central Midfielder
+# AT-Attacker
+
 player_chelsea = {
     "GK": {
         "Edouard Mendy": {
