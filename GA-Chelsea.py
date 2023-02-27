@@ -1,11 +1,17 @@
-from typing import List
-from random import choices
+from typing import List, Callable
+from random import choices, randint, random, randrange
 from collections import namedtuple
 
 Genome = List[int]
 Population = List[Genome]
+FitnessFunc = Callable[[Genome], int]
 Thing = namedtuple('Thing', ['name', 'position', 'rating', 'salary'])
 
+
+# GK-Goal Keeper
+# DF Defenders
+# CM Central Midfielder
+# AT Attacker
 things = [
     Thing('Edouard Mendy', 'GK', 6.5, 25),
     Thing('Kepa Arrizabalaga', 'GK', 7.02, 15),
@@ -51,13 +57,21 @@ def fitness(genome: Genome, things: List[Thing], salary_limit: int) -> float:
         raise ValueError("genome and things must be of the same length")
 
     salary = 0
-    value = 0
+    rating = 0
 
     for i, thing in enumerate(things):
         if genome[i] == 1:
             salary += thing.salary
-            value += thing.value
+            rating += thing.rating
 
             if salary > salary_limit:
                 return 0
-    return value/11
+    return rating
+
+
+def selection_pair(population: Population, fitness_function: FitnessFunc) -> Population:
+    return choices(
+        population=population,
+        salaries=[fitness_function(genome) for genome in population],
+        k=2
+    )
