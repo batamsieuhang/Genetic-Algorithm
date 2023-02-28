@@ -1,6 +1,6 @@
 import copy
 import random
-from data import player_chelsea
+from data import player_chelsea, sum_rate
 from random import randrange, sample
 
 
@@ -137,14 +137,9 @@ intial_seed(team=bit_string_player)
 team_information = intial_seed(team=bit_string_player)
 team_information = sorted_dict = dict(
     sorted(team_information.items(), key=lambda x: x[1]['rating'], reverse=True))
-# print(team_information)
-# for squad in team_information.values():
-#     print(squad)
 
 
-"""selection function"""
-
-
+# selection function
 def selection(population):
     fitness_scores = [individual['rating']
                       for individual in population.values()]
@@ -175,9 +170,8 @@ for selection in selection_choices:
         new_selection.append(selection)
         print(selection)
 
+
 # crossover function
-
-
 def crossover(parent1, parent2):
     child1 = copy.deepcopy(parent1)
     child2 = copy.deepcopy(parent2)
@@ -187,10 +181,39 @@ def crossover(parent1, parent2):
     return child1, child2
 
 
-parent1, parent2 = random.sample(selection_choices, 2)
+parent1, parent2 = random.sample(new_selection, 2)
 child1, child2 = crossover(parent1, parent2)
 
-print(child1, '\n', child2)
+print(child1['squad'][1][0])
 
 
 # mutation function:
+def mutation(individual):
+    for i in range(len(individual['squad'])):
+        index = randrange(0, len(individual['squad'][i]))
+        if (sum_rate()[i]['avg'] > sum_rate()[i]['rating'][index]) and (individual['squad'][i][index] == 1):
+            individual['squad'][i][index] = 1 - individual['squad'][i][index]
+            while True:
+                index_random = randrange(0, len(individual['squad'][i]))
+                if individual['squad'][i][index_random] == 0:
+                    individual['squad'][i][index_random] = 1
+                    break
+                else:
+                    continue
+        elif (individual['squad'][i][index] == 0) and (sum_rate()[i]['avg'] <= sum_rate()[i]['rating'][index]):
+            individual['squad'][i][index] = 1 - individual['squad'][i][index]
+            while True:
+                index_random = randrange(0, len(individual['squad'][i]))
+                if individual['squad'][i][index_random] == 1:
+                    individual['squad'][i][index_random] = 0
+                    break
+                else:
+                    continue
+    individual['value'] = sum_value(individual['squad'])
+    individual['rating'] = sum_rating(individual['squad'])
+    return individual
+
+
+print(child1)
+child1 = mutation(child1)
+print(child1)
