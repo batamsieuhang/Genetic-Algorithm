@@ -1,12 +1,13 @@
 import copy
 import random
+import time
 from data import player_chelsea, sum_rate
 from random import randrange, sample
 
 
 value_cap = 550  # limit for sum value 11-squad
-pop_size = 1000  # population size
-
+num_gen = 1000  # number of generation
+pop_size = 300  # population size
 
 bit_string_player = []
 
@@ -107,7 +108,7 @@ def sum_rating(team):  # sum of value 11-squad
 def intial_seed(team):
     teams = []
     team_information = {}
-    for i in range(pop_size):
+    for i in range(num_gen):
         while True:
             team = copy.deepcopy(bit_string_player)
             Ran_pos(team,
@@ -126,8 +127,6 @@ def intial_seed(team):
         team_information[index] = {"squad": team, "value": sum_value(
             team), "rating": sum_rating(team)}
         index += 1
-
-    print(len(teams))
     return team_information
 
 
@@ -159,18 +158,6 @@ def selection(population):
     return selected
 
 
-selection_choices = sorted(selection(team_information),
-                           key=lambda x: x['rating'], reverse=False)
-
-
-new_selection = []
-
-for selection in selection_choices:
-    if selection not in new_selection:
-        new_selection.append(selection)
-        print(selection)
-
-
 # crossover function
 def crossover(parent1, parent2):
     child1 = copy.deepcopy(parent1)
@@ -180,14 +167,9 @@ def crossover(parent1, parent2):
         child1['squad'][i], child2['squad'][i] = child2['squad'][i], child1['squad'][i]
     return child1, child2
 
-
-parent1, parent2 = random.sample(new_selection, 2)
-child1, child2 = crossover(parent1, parent2)
-
-print(child1['squad'][1][0])
-
-
 # mutation function:
+
+
 def mutation(individual):
     for i in range(len(individual['squad'])):
         index = randrange(0, len(individual['squad'][i]))
@@ -213,7 +195,32 @@ def mutation(individual):
     individual['rating'] = sum_rating(individual['squad'])
     return individual
 
+# run_evolution
 
-print(child1)
-child1 = mutation(child1)
-print(child1)
+
+def run_evolution(SelectionFunc, CrossoverFunc, MutationFunc):
+    start = time.time()
+    team_information = intial_seed(team=bit_string_player)  # create population
+    team_information = sorted(SelectionFunc(team_information),
+                              key=lambda x: x['rating'], reverse=False)
+    new_selection = []  # new population after selection
+    for selection in team_information:  # give duplicate element in list
+        if selection not in new_selection:
+            new_selection.append(selection)
+    for i in range(pop_size):
+        parent1, parent2 = random.sample(new_selection, 2)
+        child1, child2 = CrossoverFunc(parent1, parent2)
+        child1 = MutationFunc(child1)
+        child2 = MutationFunc(child2)
+        new_selection.append(child1)
+        new_selection.append(child2)
+    new_selection = sorted(new_selection,
+                           key=lambda x: x['rating'], reverse=True)
+    print(f'best squad for chelsea team is: {new_selection[0]}')
+    end = time.time()
+    print(f"time excute: {end-start}'s")
+
+
+# main program
+run_evolution(SelectionFunc=selection,
+              CrossoverFunc=crossover, MutationFunc=mutation)
