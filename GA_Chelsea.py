@@ -4,8 +4,8 @@ from data import player_chelsea
 from random import randrange, sample
 
 
-value_cap = 500  # limit for sum value 11-squad
-pop_size = 20  # population size
+value_cap = 550  # limit for sum value 11-squad
+pop_size = 1000  # population size
 
 
 bit_string_player = []
@@ -28,19 +28,16 @@ def Ran_pos(team, position, num_player):
     if (position == "DF"):
         flag = 0
         index = sample(range(int(len(team[1]))), num_player)
-        print(index)
         for i in index:
             team[1][i] = 1
     if (position == "CM"):
         flag = 0
         index = sample(range(int(len(team[2]))), num_player)
-        print(index)
         for i in index:
             team[2][i] = 1
     if (position == "AT"):
         flag = 0
         index = sample(range(int(len(team[3]))), num_player)
-        print(index)
         for i in index:
             team[3][i] = 1
     return team
@@ -131,7 +128,6 @@ def intial_seed(team):
         index += 1
 
     print(len(teams))
-    print(team_information)
     return team_information
 
 
@@ -141,9 +137,9 @@ intial_seed(team=bit_string_player)
 team_information = intial_seed(team=bit_string_player)
 team_information = sorted_dict = dict(
     sorted(team_information.items(), key=lambda x: x[1]['rating'], reverse=True))
-print(team_information)
-for squad in team_information.values():
-    print(squad)
+# print(team_information)
+# for squad in team_information.values():
+#     print(squad)
 
 
 """selection function"""
@@ -165,14 +161,23 @@ def selection(population):
             if cumulative_probability > r:
                 selected.append(population[j])
                 break
-
     return selected
 
 
-selection_choices = selection(team_information)
+selection_choices = sorted(selection(team_information),
+                           key=lambda x: x['rating'], reverse=False)
 
+
+new_selection = []
+
+for selection in selection_choices:
+    if selection not in new_selection:
+        new_selection.append(selection)
+        print(selection)
 
 # crossover function
+
+
 def crossover(parent1, parent2):
     child1 = copy.deepcopy(parent1)
     child2 = copy.deepcopy(parent2)
@@ -185,4 +190,7 @@ def crossover(parent1, parent2):
 parent1, parent2 = random.sample(selection_choices, 2)
 child1, child2 = crossover(parent1, parent2)
 
-print(child1, "\n", child2)
+print(child1, '\n', child2)
+
+
+# mutation function:
