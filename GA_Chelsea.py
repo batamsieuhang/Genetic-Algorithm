@@ -73,6 +73,38 @@ def sum_value(team):  # sum of value 11-squad
                 index += 1
     return value
 
+# print 11-squad
+
+
+def print_squad(team):
+    value = {}
+    for i in range(int(len(team))):
+        if i == 0:
+            index = 0
+            for players in player_chelsea["GK"].values():
+                if (team[i][index]) == 1:
+                    print(f"GK: {players['name']},")
+                index += 1
+        if i == 1:
+            index = 0
+            for players in player_chelsea["DF"].values():
+                if (team[i][index]) == 1:
+                    print(f"DF: {players['name']},")
+                index += 1
+        if i == 2:
+            index = 0
+            for players in player_chelsea["CM"].values():
+                if (team[i][index]) == 1:
+                    print(f"CM: {players['name']},")
+                index += 1
+        if i == 3:
+            index = 0
+            for players in player_chelsea["AT"].values():
+                if (team[i][index]) == 1:
+                    print(f"AT: {players['name']},")
+                index += 1
+    return 0
+
 
 def sum_rating(team):  # sum of value 11-squad
     rating = 0
@@ -216,8 +248,10 @@ def run_evolution(SelectionFunc, CrossoverFunc, MutationFunc):
         new_selection.append(child2)
     new_selection = sorted(new_selection,
                            key=lambda x: x['rating'], reverse=True)
-    print(f'best squad for chelsea team is: {new_selection[0]}')
+    print("best squad 4-4-3 for chelsea team is: ", '')
+    print_squad(new_selection[0]['squad'])
     end = time.time()
+    print("the value of club is")
     print(f"time excute: {end-start}'s")
 
 
