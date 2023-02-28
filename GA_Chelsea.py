@@ -251,8 +251,10 @@ def run_evolution(SelectionFunc, CrossoverFunc, MutationFunc):
     print("best squad 4-4-3 for chelsea team is: ", '')
     print_squad(new_selection[0]['squad'])
     end = time.time()
-    print("the value of club is")
-    print(f"time excute: {end-start}'s")
+    print(f"the value of club is: ", str(sum_value(new_selection[0]['squad'])))
+    print(f"the rating of club is: ", str(
+        sum_rating(new_selection[0]['squad'])))
+    print(f"time excute: {end-start}s")
 
 
 # main program
