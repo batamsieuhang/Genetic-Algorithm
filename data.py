@@ -213,3 +213,38 @@ player_chelsea = {
 
 
 }
+
+# avg rating for each position
+
+
+def sum_rating():
+    rating = {}
+    sum_rate = 0
+    index = 0
+    for position in player_chelsea.values():
+        position_rating = []
+        position_rate = 0
+        for player in position.values():
+            print(player['rating'])
+            position_rating.append(player['rating'])
+            sum_rate += player['rating']
+            position_rate += player['rating']
+        if index == 0:
+            rating['GK'] = {'avg': float(
+                position_rate/len(position.values())), 'rating': position_rating}
+        if index == 1:
+            rating['DF'] = {'avg': float(
+                position_rate/len(position.values())), 'rating': position_rating}
+        if index == 2:
+            rating['CM'] = {'avg': float(
+                position_rate/len(position.values())), 'rating': position_rating}
+        if index == 3:
+            rating['AT'] = {'avg': float(
+                position_rate/len(position.values())), 'rating': position_rating}
+        index += 1
+
+    print(rating, '\n', sum_rate)
+    return rating
+
+
+sum_rating()
