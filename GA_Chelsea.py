@@ -1,7 +1,7 @@
 import copy
 import random
 import time
-from data import player_chelsea, sum_rate
+from data import player_chelsea, sum_rate_avg
 from random import randrange, sample
 
 
@@ -205,7 +205,7 @@ def crossover(parent1, parent2):
 def mutation(individual):
     for i in range(len(individual['squad'])):
         index = randrange(0, len(individual['squad'][i]))
-        if (sum_rate()[i]['avg'] > sum_rate()[i]['rating'][index]) and (individual['squad'][i][index] == 1):
+        if (sum_rate_avg()[i]['avg'] > sum_rate_avg()[i]['rating'][index]) and (individual['squad'][i][index] == 1):
             individual['squad'][i][index] = 1 - individual['squad'][i][index]
             while True:
                 index_random = randrange(0, len(individual['squad'][i]))
@@ -214,7 +214,7 @@ def mutation(individual):
                     break
                 else:
                     continue
-        elif (individual['squad'][i][index] == 0) and (sum_rate()[i]['avg'] <= sum_rate()[i]['rating'][index]):
+        elif (individual['squad'][i][index] == 0) and (sum_rate_avg()[i]['avg'] <= sum_rate_avg()[i]['rating'][index]):
             individual['squad'][i][index] = 1 - individual['squad'][i][index]
             while True:
                 index_random = randrange(0, len(individual['squad'][i]))
