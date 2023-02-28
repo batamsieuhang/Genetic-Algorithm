@@ -229,18 +229,8 @@ def sum_rating():
             position_rating.append(player['rating'])
             sum_rate += player['rating']
             position_rate += player['rating']
-        if index == 0:
-            rating['GK'] = {'avg': float(
-                position_rate/len(position.values())), 'rating': position_rating}
-        if index == 1:
-            rating['DF'] = {'avg': float(
-                position_rate/len(position.values())), 'rating': position_rating}
-        if index == 2:
-            rating['CM'] = {'avg': float(
-                position_rate/len(position.values())), 'rating': position_rating}
-        if index == 3:
-            rating['AT'] = {'avg': float(
-                position_rate/len(position.values())), 'rating': position_rating}
+        rating[index] = {'avg': float(
+            position_rate/len(position.values())), 'rating': position_rating}
         index += 1
 
     print(rating, '\n', sum_rate)
