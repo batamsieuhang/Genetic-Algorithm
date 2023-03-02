@@ -17,33 +17,6 @@ for pos in player_chelsea.values():
     bit_string_player.append([index['flag'] for index in pos.values()])
 
 
-"""
-Create random bits string in teamsquad for each postion with number player
-"""
-
-
-def Ran_pos(team, position, num_player):
-    if (position == "GK"):
-        for i in range(num_player):
-            team[0][randrange(int(len(team[0])))] = 1
-    if (position == "DF"):
-        flag = 0
-        index = sample(range(int(len(team[1]))), num_player)
-        for i in index:
-            team[1][i] = 1
-    if (position == "CM"):
-        flag = 0
-        index = sample(range(int(len(team[2]))), num_player)
-        for i in index:
-            team[2][i] = 1
-    if (position == "AT"):
-        flag = 0
-        index = sample(range(int(len(team[3]))), num_player)
-        for i in index:
-            team[3][i] = 1
-    return team
-
-
 def sum_value(team):  # sum of value 11-squad
     value = 0
     for i in range(int(len(team))):
@@ -136,8 +109,31 @@ def sum_rating(team):  # sum of value 11-squad
     return rating
 
 
+# Create random bits string in teamsquad for each postion with number player
+def Ran_pos(team, position, num_player):
+    if (position == "GK"):
+        for i in range(num_player):
+            team[0][randrange(int(len(team[0])))] = 1
+    if (position == "DF"):
+        flag = 0
+        index = sample(range(int(len(team[1]))), num_player)
+        for i in index:
+            team[1][i] = 1
+    if (position == "CM"):
+        flag = 0
+        index = sample(range(int(len(team[2]))), num_player)
+        for i in index:
+            team[2][i] = 1
+    if (position == "AT"):
+        flag = 0
+        index = sample(range(int(len(team[3]))), num_player)
+        for i in index:
+            team[3][i] = 1
+    return team
+
+
 # create population
-def intial_seed(team):
+def population(team):
     teams = []
     team_information = {}
     for i in range(num_gen):
@@ -162,10 +158,10 @@ def intial_seed(team):
     return team_information
 
 
-intial_seed(team=bit_string_player)
+population(team=bit_string_player)
 
 
-team_information = intial_seed(team=bit_string_player)
+team_information = population(team=bit_string_player)
 team_information = sorted_dict = dict(
     sorted(team_information.items(), key=lambda x: x[1]['rating'], reverse=True))
 
@@ -199,9 +195,8 @@ def crossover(parent1, parent2):
         child1['squad'][i], child2['squad'][i] = child2['squad'][i], child1['squad'][i]
     return child1, child2
 
+
 # mutation function:
-
-
 def mutation(individual):
     for i in range(len(individual['squad'])):
         index = randrange(0, len(individual['squad'][i]))
@@ -232,11 +227,12 @@ def mutation(individual):
 
 def run_evolution(SelectionFunc, CrossoverFunc, MutationFunc):
     start = time.time()
-    team_information = intial_seed(team=bit_string_player)  # create population
+    team_information = population(team=bit_string_player)  # create population
     team_information = sorted(SelectionFunc(team_information),
                               key=lambda x: x['rating'], reverse=False)
     new_selection = []  # new population after selection
-    for selection in team_information:  # give duplicate element in list
+    for selection in team_information:  # delete duplicate element in list
+        print(selection)
         if selection not in new_selection:
             new_selection.append(selection)
     for i in range(pop_size):
