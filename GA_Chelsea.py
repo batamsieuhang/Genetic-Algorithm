@@ -144,7 +144,7 @@ def population(team):
             Ran_pos(team,
                     position="DF", num_player=4)
             Ran_pos(team,
-                    position="CM", num_player=4)
+                    position="CM", num_player=3)
             Ran_pos(team,
                     position="AT", num_player=3)
             if (sum_value(team) <= value_cap):
